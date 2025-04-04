@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sneaker Collection Output</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2 {
+            text-align: center;
+        }
+
+        .sneaker-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .total-value {
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Sneaker Collection Output</h1>
+        <h2>Your Sneakers</h2>
+        <div id="sneaker-list"></div>
+        <div class="total-value" id="total-value"></div>
+    </div>
+
+    <script>
+        // Sample sneaker data (this would typically come from your main application)
+        const sneakers = JSON.parse(localStorage.getItem('sneakers')) || [];
+        
+        function displaySneakers() {
+            const sneakerList = document.getElementById("sneaker-list");
+            if (sneakers.length === 0) {
+                sneakerList.innerHTML = "<p>No sneakers in collection.</p>";
+                return;
+            }
+            sneakerList.innerHTML = sneakers.map(sneaker => `
+                <div class="sneaker-item">
+                    <strong>${sneaker.name}</strong> - ${sneaker.brand} - ${sneaker.size} - ${sneaker.color} - $${sneaker.price.toFixed(2)}
+                </div>
+            `).join('');
+        }
+
+        function displayTotalValue() {
+            const totalValue = sneakers.reduce((total, sneaker) => total + sneaker.price, 0);
+            const totalValueDiv = document.getElementById("total-value");
+            totalValueDiv.innerHTML = `Total Collection Value: $${totalValue.toFixed(2)}`;
+        }
+
+        // Call functions to display sneakers and total value
+        displaySneakers();
+        displayTotalValue();
+    </script>
+
+</body>
+</html>
